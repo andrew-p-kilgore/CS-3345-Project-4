@@ -1,0 +1,4 @@
+3
+Austin|Baustin|20|100.00
+Austin|Caustin|30|200.00
+Austin|Daustin|40|300.00
