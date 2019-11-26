@@ -1,6 +1,7 @@
 public class CityInfo {
 
-	String name = "";
+	String fromcity;
+	String tocity;
 	int time;
 	double cost;
 	
