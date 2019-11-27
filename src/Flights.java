@@ -12,22 +12,17 @@ public class Flights {
 	
 	Flights () {}
 	
-	void readfromfile (String infile) throws Exception {
+	void readinput1fromfile (String infile) throws Exception {
 		in = new File (infile);
 		Scanner input = new Scanner (in);
 		int numflights = input.nextInt();
 		for(int i=0; i < numflights; i++) {
 			String instring = input.next();
 			tempcity.fromcity = instring.substring(0, instring.indexOf('|'));
-			//System.out.println("The first city name is: " + tempcity.fromcity);
 			String nextstring = instring.substring(instring.indexOf('|') + 1);
 			tempcity.tocity = nextstring.substring(0, nextstring.indexOf('|'));
-			//System.out.println("The second city name is: " + tempcity.tocity);
 			tempcity.time = Integer.parseInt(nextstring.substring(nextstring.indexOf('|') + 1, nextstring.lastIndexOf('|')));
-			//System.out.println("The flight time is: " + tempcity.time);
 			tempcity.cost = Double.parseDouble(nextstring.substring(nextstring.lastIndexOf('|') + 1));
-			//System.out.println("The flight's cost is: $" + tempcity.cost);
-			
 			if(vertices.size() == 0) {
 				System.out.println("First city is added..");
 				vertices.add(new Edges());
