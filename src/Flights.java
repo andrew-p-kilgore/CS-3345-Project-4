@@ -7,8 +7,8 @@ public class Flights {
 	File in;
 	File out;
 	File plans;
-	LinkedList<Rows> rows = new LinkedList<Rows>();
-	CityInfo city = new CityInfo();
+	LinkedList<Edges> vertices = new LinkedList<Edges>();
+	CityInfo tempcity = new CityInfo();
 	
 	Flights () {}
 	
@@ -18,19 +18,48 @@ public class Flights {
 		int numflights = input.nextInt();
 		for(int i=0; i < numflights; i++) {
 			String instring = input.next();
-			city.fromcity = instring.substring(0, instring.indexOf('|'));
-			System.out.println("The first city name is: " + city.fromcity);
+			tempcity.fromcity = instring.substring(0, instring.indexOf('|'));
+			//System.out.println("The first city name is: " + tempcity.fromcity);
 			String nextstring = instring.substring(instring.indexOf('|') + 1);
-			city.tocity = nextstring.substring(0, nextstring.indexOf('|'));
-			System.out.println("The second city name is: " + city.tocity);
-			city.time = Integer.parseInt(nextstring.substring(nextstring.indexOf('|') + 1, nextstring.lastIndexOf('|')));
-			System.out.println("The flight time is: " + city.time);
-			city.cost = Double.parseDouble(nextstring.substring(nextstring.lastIndexOf('|') + 1));
-			DecimalFormat df = new DecimalFormat("#.00");
-			System.out.println("The flight's cost is: $" + df.format(city.cost));
+			tempcity.tocity = nextstring.substring(0, nextstring.indexOf('|'));
+			//System.out.println("The second city name is: " + tempcity.tocity);
+			tempcity.time = Integer.parseInt(nextstring.substring(nextstring.indexOf('|') + 1, nextstring.lastIndexOf('|')));
+			//System.out.println("The flight time is: " + tempcity.time);
+			tempcity.cost = Double.parseDouble(nextstring.substring(nextstring.lastIndexOf('|') + 1));
+			//System.out.println("The flight's cost is: $" + tempcity.cost);
 			
-			
-			
+			if(vertices.size() == 0) {
+				System.out.println("First city is added..");
+				vertices.add(new Edges());
+				System.out.println("Now there are " + vertices.size() + " vertices");
+				vertices.getFirst().addEdge(tempcity);
+				continue;
+			}
+			Boolean foundcity = false;
+			for(int j=0; j < vertices.size(); j++) {
+				if( vertices.get(j).getSourceCity().equalsIgnoreCase(tempcity.fromcity) ) {
+					System.out.println("Adding a city to an existing source city...");
+					vertices.get(j).addEdge(tempcity);
+					System.out.println("Now there are " + vertices.get(j).getSize() + " flights from " + tempcity.fromcity);
+					foundcity = true;
+				}	
+			}
+			if (foundcity == false) {
+				System.out.println("Print this when adding a new vertex");
+				vertices.add(new Edges());
+				vertices.getLast().addEdge(tempcity);
+			}
+		}
+	input.close();
+	}
+	
+	void showfirst() {
+		vertices.getFirst().showedges();
+	}
+	
+	void showflights() {
+		for(int i=0; i < vertices.size(); i++) {
+			vertices.get(i).showedges();
 		}
 	}
 	
