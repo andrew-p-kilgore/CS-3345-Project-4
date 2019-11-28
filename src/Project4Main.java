@@ -5,6 +5,8 @@ public class Project4Main {
 		Flights flights = new Flights();
 		flights.readinput1fromfile("FlightDataFile.txt");
 		flights.showflights();
+		FlightPath f = new FlightPath(flights.vertices);
+		f.findshortestpath(flights.vertices, 0);
 	}
 
 }
