@@ -1,58 +1,76 @@
 import java.util.*;
-import java.lang.*;
 
 public class FlightPath {
 
-	int size;
+	LinkedList<CityInfo> edges = new LinkedList<CityInfo>();
 	
-	FlightPath (LinkedList<Edges> cities) {
-		size = cities.size();
-	}
-	
-	void findshortestpath (LinkedList<Edges> cities, int sourcecityindex) {
+	Edges getrowgivencity (LinkedList<Edges> wholething, String dest) {
 		
-		int dist [] = new int [size];
-		Boolean sptSet [] = new Boolean [size];
-		for (int i = 0; i < size; i++) {
-			dist[i] = Integer.MAX_VALUE;
-			sptSet[i] = false;
-		}
+		int cityindex = -1;
 		
-		dist[sourcecityindex] = 0;
-		
-		for(int i = 0; i < (size - 1); i++ ) {
-			int u = mindistance(dist,sptSet);
-			sptSet[u] = true;
-			for(int j = 0; j < size; j++ ) {
-				String v = cities.get(j).getSourceCity();
-				
-				if(!sptSet[j] && dist[u] != Integer.MAX_VALUE && (cities.get(u).containsDest(v)))
-					if((cities.get(j).getTimeatIndex(cities.get(u).getIndexofDest(v)) + dist[u]) < dist[j]) {
-						dist[j] = dist[u] + cities.get(u).getTimeatIndex(cities.get(u).getIndexofDest(v));
-			 	}
+		for(int i = 0; i < wholething.size(); i++) {
+			if( wholething.get(i).getSourceCity().equalsIgnoreCase(dest)) {
+				cityindex = i;
+				break;
 			}
 		}
-		System.out.println("Final:");
-		printSolution(dist);
+		return wholething.get(cityindex);
 	}
 	
-	int mindistance (int dist[], Boolean sptSet[]) {
-		int min = Integer.MAX_VALUE;
-		int minindex = -1;
+	Edges findflightpath (LinkedList<Edges> rows, CityInfo city, String destination) {
 		
-		for (int i = 0; i < sptSet.length; i++) {
-			if ((sptSet[i] == false) && (dist[i] <= min) ) {
-				min = dist[i];
-				minindex = i;
+		Stack<CityInfo> edges = new Stack<CityInfo>();
+		edges.add(city);
+		boolean stackfilled = false;
+		Edges paths = new Edges();
+		
+		while(!edges.isEmpty()) {
+			CityInfo dest = edges.pop();
+			if(dest.visited == false) {
+				//System.out.println(dest);
+				paths.addEdge(dest);
+				dest.visited = true;
+				for (int j = 0; j < rows.size(); j++) {
+					for (int k = 0; k < rows.get(j).edges.size(); k++) {
+						if(rows.get(j).edges.get(k).tocity.equalsIgnoreCase(dest.fromcity))
+							rows.get(j).edges.get(k).visited = true;
+					}
+				}
+				if(dest.tocity.equalsIgnoreCase(destination)) {
+					break;
+				}
+					
+			}
+			
+			Edges row = getrowgivencity(rows, dest.tocity);
+			
+			if(stackfilled == false) {
+				for(int i = 0; i < row.getSize(); i++) {
+					CityInfo c = row.edges.get(i);
+					if( (c != null) && (c.visited == false)) {
+						edges.add(c);
+					}
+					if( c.tocity.equalsIgnoreCase(destination)) {
+						stackfilled = true;
+					}
+				}	
+			}
+			
+		}
+		dupecheck(paths);
+		for(int i = 0; i < paths.getSize(); i++) {
+			paths.totalcost += paths.edges.get(i).cost;
+			paths.totaltime += paths.edges.get(i).time;
+		}
+		return paths;
+	}
+	
+	void dupecheck (Edges paths) {
+		if(paths.getSize() > 2) {
+			for(int i = 0; i < (paths.getSize() - 1); i++) {
+				if(paths.edges.get(i).fromcity.equalsIgnoreCase(paths.edges.get(i+1).fromcity))
+					paths.edges.remove(i);
 			}
 		}
-		return minindex;
 	}
-	
-	void printSolution(int dist[]) 
-    { 
-        System.out.println("Vertex \t\t Distance from Source"); 
-        for (int i = 0; i < size; i++) 
-            System.out.println(i + " \t\t " + dist[i]); 
-    } 
 }

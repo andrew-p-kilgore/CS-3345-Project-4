@@ -4,6 +4,7 @@ public class CityInfo {
 	String tocity;
 	int time;
 	double cost;
+	boolean visited;
 	
 	CityInfo () {}
 	
@@ -15,6 +16,6 @@ public class CityInfo {
 	}
 	
 	public String toString() {
-		return "From: " + fromcity + " To: " + tocity + " Time: " + time + " Cost: " + cost;
+		return fromcity + " -> " + tocity + " Time: " + time + " Cost: " + cost;
 	}
 }

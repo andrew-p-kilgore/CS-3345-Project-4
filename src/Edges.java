@@ -3,6 +3,8 @@ import java.util.*;
 public class Edges {
 
 	LinkedList<CityInfo> edges = new LinkedList<CityInfo>();
+	int totalcost;
+	int totaltime;
 	
 	Edges () {}
 	
