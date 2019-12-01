@@ -4,7 +4,7 @@ public class Project4Main {
 		// TODO Auto-generated method stub
 		Flights flights = new Flights();
 		flights.readinput1fromfile(args [0]);
-		flights.readinput2fromfile(args [1]);
+		flights.readinput2fromfile(args [1], args [2]);
 	}
 
 }

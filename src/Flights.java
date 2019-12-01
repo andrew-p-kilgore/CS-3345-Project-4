@@ -13,7 +13,7 @@ public class Flights {
 	
 	Flights () {}
 	
-	void readinput1fromfile (String infile) throws Exception {
+	void readinput1fromfile (String infile) throws FileNotFoundException {
 		in = new File (infile);
 		Scanner input = new Scanner (in);
 		int numflights = input.nextInt();
@@ -49,10 +49,12 @@ public class Flights {
 	input.close();
 	}
 	
-	void readinput2fromfile(String infile) throws Exception {
+	void readinput2fromfile(String infile, String outfile) throws FileNotFoundException {
 		in = new File (infile);
 		Scanner input = new Scanner (in);
 		int numplans = input.nextInt();
+		PrintStream outputfile = new PrintStream(new File(outfile));
+		System.setOut(outputfile);
 		for(int i=0; i < numplans; i++) {
 			String instring = input.next();
 			reqflight.src = instring.substring(0, instring.indexOf('|'));
@@ -64,10 +66,11 @@ public class Flights {
 				System.out.print("Cost)\n");
 			else
 				System.out.print("Time)\n");
-			sortpaths(reqflight.timeorcost);
+			
 			showflights(reqflight);
 		}
 	input.close();
+	
 	}
 	
 	void showfirst() {
@@ -93,8 +96,7 @@ public class Flights {
 				for(int k = 0; k < vertices.get(j).getSize(); k++)
 					vertices.get(j).edges.get(k).visited = false;
 		}
-		
-		
+		sortpaths(reqflight.timeorcost);
 		for(int i = 0; i < pathstosort.size(); i++) {
 			System.out.print("Path " + (i+1) + ": " + pathstosort.get(i).getSourceCity());
 			for(int j = 0; j < pathstosort.get(i).getSize(); j++) {
@@ -108,7 +110,7 @@ public class Flights {
 	void sortpaths(char orderchar) {
 		int n = pathstosort.size();
 		for (int i = 0; i < n-1; i++) 
-			{ 
+			{
         	int min = i; 
         	for (int j = i+1; j < n; j++) {
         		if(orderchar == 'C') {
@@ -121,13 +123,13 @@ public class Flights {
         		}
         	}
             Edges temp1 = new Edges();
-            temp1 = pathstosort.get(min); 
+            temp1 = pathstosort.remove(min); 
             Edges temp2 = new Edges();
-            temp2 = pathstosort.get(i);
-            pathstosort.remove(min);
+            temp2 = pathstosort.remove(i);
+            if(min == 2)
+            	min--;
             pathstosort.add(min,temp2); 
-            pathstosort.remove(i);
-            pathstosort.add(temp1);
+            pathstosort.add(i,temp1);
 	        } 
 	}
 }
