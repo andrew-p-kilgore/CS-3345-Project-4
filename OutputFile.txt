@@ -1,0 +1,8 @@
+Flight 1 : Austin, Boston (Time)
+Path 1: Austin -> Boston Time: 1 Cost: 10
+Path 2: Austin -> Chicago -> Dallas -> Boston Time: 10 Cost: 100
+Path 3: Austin -> Dallas -> Fairbanks -> Everest -> Chicago -> Boston Time: 12 Cost: 120
+Flight 2 : Dallas, Everest (Cost)
+Path 1: Dallas -> Chicago -> Everest Time: 4 Cost: 40
+Path 2: Dallas -> Fairbanks -> Everest Time: 5 Cost: 50
+Path 3: Dallas -> Austin -> Chicago -> Everest Time: 10 Cost: 100
