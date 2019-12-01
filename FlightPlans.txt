@@ -1,0 +1,3 @@
+2
+Austin|Boston|T
+Dallas|Everest|C

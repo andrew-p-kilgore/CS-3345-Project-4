@@ -1,4 +1,4 @@
-10
+14
 Austin|Boston|1|10
 Boston|Austin|1|10
 Boston|Chicago|2|20
@@ -9,3 +9,7 @@ Dallas|Austin|4|40
 Austin|Dallas|4|40
 Austin|Chicago|5|50
 Chicago|Austin|5|50
+Chicago|Everest|1|1
+Everest|Chicago|1|1
+Fairbanks|Dallas|2|2
+Dallas|Fairbanks|2|2
